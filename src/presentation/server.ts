@@ -4,7 +4,8 @@ import { CronService } from "./cron/cron-service";
 export class Server {
   public static start() {
     CronService.createJob("*/5 * * * * *", () => {
-      new CheckService().execute("https://google.com");
+      //new CheckService().execute("https://google.com");
+      new CheckService().execute("http://localhost:3000");
     });
   }
 }
