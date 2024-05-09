@@ -5,7 +5,14 @@ export class Server {
   public static start() {
     CronService.createJob("*/5 * * * * *", () => {
       //new CheckService().execute("https://google.com");
-      new CheckService().execute("http://localhost:3000");
+      new CheckService(
+        () => {
+          console.log("Service is ok");
+        },
+        (error: string) => {
+          console.log(error);
+        }
+      ).execute("http://localhost:3000");
     });
   }
 }
