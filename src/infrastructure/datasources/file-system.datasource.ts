@@ -1,7 +1,11 @@
 import fs from "fs";
 
 import { LogDatasource } from "../../domain/datasources/log.datasource";
-import { LogEntity, LogSeverityLevel } from "../../domain/entities/log.entity";
+import {
+  LogEntity,
+  LogSeverityLevel,
+  typeLogSeverityLevel,
+} from "../../domain/entities/log.entity";
 
 export class FileSystemDatasourcer implements LogDatasource {
   private readonly logPath = "logs/";
@@ -43,7 +47,24 @@ export class FileSystemDatasourcer implements LogDatasource {
       fs.appendFileSync(this.highLogsPath, logAsJson);
     }
   }
-  getLogs(severityLevel: "low" | "medium" | "high"): Promise<LogEntity[]> {
-    throw new Error("Method not implemented.");
+
+  private getLogsFromFile(path: string): LogEntity[] {
+    const content = fs.readFileSync(path, "utf-8");
+    const logs = content.split("\n").map((log) => LogEntity.fromJSON(log));
+
+    return logs;
+  }
+
+  async getLogs(severityLevel: typeLogSeverityLevel): Promise<LogEntity[]> {
+    switch (severityLevel) {
+      case LogSeverityLevel.low:
+        return this.getLogsFromFile(this.allLogsPath);
+      case LogSeverityLevel.medium:
+        return this.getLogsFromFile(this.mediumLogsPath);
+      case LogSeverityLevel.high:
+        return this.getLogsFromFile(this.highLogsPath);
+      default:
+        throw new Error(`${severityLevel} not implemented`);
+    }
   }
 }
