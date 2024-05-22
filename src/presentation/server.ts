@@ -2,6 +2,7 @@ import { CheckService } from "../domain/use-cases/checks/check-service";
 import { FileSystemDatasource } from "../infrastructure/datasources/file-system.datasource";
 import { LogRepositoryImpl } from "../infrastructure/repositories/log.repository.impl";
 import { CronService } from "./cron/cron-service";
+import { EmailService } from "./email/email-service";
 
 const fileSystemLogRepository = new LogRepositoryImpl(
   new FileSystemDatasource()
@@ -9,9 +10,10 @@ const fileSystemLogRepository = new LogRepositoryImpl(
 
 export class Server {
   public static start() {
-    CronService.createJob("*/5 * * * * *", () => {
-      //new CheckService().execute("https://google.com");
-      new CheckService(
+    const emailService = new EmailService();
+    emailService.sendEmailWithFileSystemLogs("jose.angel.hdz.rda@gmail.com");
+    //CronService.createJob("*/5 * * * * *", () => {
+    /*  new CheckService(
         fileSystemLogRepository,
         () => {
           console.log("Service is ok");
@@ -20,6 +22,6 @@ export class Server {
           console.log(error);
         }
       ).execute("https://google.com");
-    });
+    });*/
   }
 }
