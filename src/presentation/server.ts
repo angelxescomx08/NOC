@@ -10,8 +10,8 @@ const fileSystemLogRepository = new LogRepositoryImpl(
 
 export class Server {
   public static start() {
-    const emailService = new EmailService();
-    emailService.sendEmailWithFileSystemLogs("jose.angel.hdz.rda@gmail.com");
+    /* const emailService = new EmailService(fileSystemLogRepository);
+    emailService.sendEmailWithFileSystemLogs("jose.angel.hdz.rda@gmail.com"); */
     //CronService.createJob("*/5 * * * * *", () => {
     /*  new CheckService(
         fileSystemLogRepository,
