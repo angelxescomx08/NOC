@@ -12,12 +12,5 @@ async function main() {
     dbName: envs.MONGO_DB_NAME,
     mongoURL: envs.MONGO_URL,
   });
-
-  const newLog = await LogModel.create({
-    message: "Test message desde mongo",
-    origin: "App.ts",
-  });
-
-  await newLog.save();
   Server.start();
 }
