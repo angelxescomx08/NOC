@@ -13,17 +13,5 @@ async function main() {
     dbName: envs.MONGO_DB_NAME,
     mongoURL: envs.MONGO_URL,
   });
-  //Server.start();
-
-  const prisma = new PrismaClient();
-  /* const newLog = await prisma.logModel.create({
-    data: {
-      level: "HIGH",
-      origin: "App.ts",
-      message: "Hello world",
-    },
-  }); */
-  const logs = await prisma.logModel.findMany();
-
-  console.log({logs});
+  Server.start();
 }
