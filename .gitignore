@@ -6,7 +6,12 @@ dist
 logs/
 
 .env
+.env.test
 
 mongo/
 postgres/
 prisma/migrations/
+mongo-test/
+postgres-test/
+
+coverage/
